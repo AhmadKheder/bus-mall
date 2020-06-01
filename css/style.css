@@ -134,10 +134,11 @@ margin-top: 100%;
 
 main canvas{
 float: right;
+margin-left: 100px;
 }
 
 main div{
 
-  width: 400px;
-  height: 400px;
+  width: 600px;
+  height: 1800px;
 }
