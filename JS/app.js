@@ -8,7 +8,7 @@ var productNames = [
     'bag', 'banana', 'bathroom', 'breakfast', 'bubblegum', 'chair',
     'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors',
     'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'
-]
+];
 
 //constructor
 function Product(name, imgPath) {
@@ -41,13 +41,39 @@ var productsShow = document.querySelector('#productsShow');
 
 //objects
 var left, mid, right;
-var arr = []
+var firstRandoms = [];
+// random nums for the renderImages()
+function randNums() {
+
+    var arr = [];
+    var rand1 = randomNumber(0, Product.all.length - 1);
+    var rand2 = randomNumber(0, Product.all.length - 1);
+    var rand3 = randomNumber(0, Product.all.length - 1);
+    arr.push(rand1, rand2, rand3);
+
+    return arr;
+}
+//prevent duplicating in the second itiration
+firstRandoms = randNums();
+// var lastRand1, lastRand2, lastRand3;//these are depeding on the rand#s in randNums()
+
 // fill in images 
+var localRandNumsArr = [];
 function renderImages() {
-    //init three rand Objects
-    left = Product.all[randomNumber(0, Product.all.length - 1)];
-    mid = Product.all[randomNumber(0, Product.all.length - 1)];
-    right = Product.all[randomNumber(0, Product.all.length - 1)];
+    localRandNumsArr = randNums();
+    console.log('localRandNumsArr' + localRandNumsArr);
+    console.log('firstRandoms' + firstRandoms);
+    
+        if (localRandNumsArr[0] == localRandNumsArr[1] || localRandNumsArr[0] == localRandNumsArr[2] || localRandNumsArr[2] == localRandNumsArr[3]) {
+            randNums();
+
+
+        }
+        //init three rand Objects
+        left = Product.all[localRandNumsArr[0]];
+        mid = Product.all[localRandNumsArr[1]];
+        right = Product.all[localRandNumsArr[2]];
+    
     left.displayed++;
     mid.displayed++;
     right.displayed++;
@@ -63,11 +89,13 @@ function renderImages() {
     rightImage.src = right.imgPath;
     rightImage.title = right.productname;
     rightImage.alt = right.productname;
-}
 
+}
+do{
 
 renderImages();
-
+}
+while(!(localRandNumsArr.includes(firstRandoms[0]) || localRandNumsArr.includes(firstRandoms[1]) || localRandNumsArr.includes(firstRandoms[2])));
 productsShow.addEventListener('click', function (event) {
     // console.log(event.target)
     if (totalClicks < 5) {
@@ -82,7 +110,9 @@ productsShow.addEventListener('click', function (event) {
             if (event.target.id === 'third') {
                 right.clicks++;
             }
+
             renderImages();
+
         }
 
     } else {
@@ -94,8 +124,8 @@ productsShow.addEventListener('click', function (event) {
         }
         // console.log(allProducts);
         for (var i = 0; i < Product.all.length; i++) {
-            labelsArr.push('Clicks');
-            labelsArr.push('Views');
+            labelsArr.push(`${Product.all[i].productname} Clk`);
+            labelsArr.push(`${Product.all[i].productname} Vus`);
         }
         chart();
     }
