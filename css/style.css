@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Slab:wght@500;900&display=swap');
 body{
-  background-color: #d3b8ae;
-  background-image: url('https://images-na.ssl-images-amazon.com/images/I/914ZHKipiaL._AC_SX466_.jpg');
+  /* background-color: #d3b8ae; */
+  /* background-image: url('https://images-na.ssl-images-amazon.com/images/I/914ZHKipiaL._AC_SX466_.jpg'); */
   background-size: cover;
   background-position: center;
   top: 0; bottom: 0; left: 0; right: 0; 
@@ -130,4 +130,14 @@ main p{
 footer{
 text-align: center;
 margin-top: 100%;
+}
+
+main canvas{
+float: right;
+}
+
+main div{
+
+  width: 400px;
+  height: 400px;
 }

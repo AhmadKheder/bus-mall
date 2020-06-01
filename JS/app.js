@@ -1,7 +1,8 @@
 'use strict'
 
 var totalClicks = 0;
-
+var allProducts = [];
+var labelsArr = [];
 //product names from pics
 var productNames = [
     'bag', 'banana', 'bathroom', 'breakfast', 'bubblegum', 'chair',
@@ -22,12 +23,12 @@ Product.all = []
 
 //creating objects
 for (var i = 0; i < productNames.length; i++) {
-    if (productNames[i] != 'usb' && productNames[i] != 'sweep' ) {
+    if (productNames[i] != 'usb' && productNames[i] != 'sweep') {
         new Product(productNames[i], `/assets/${productNames[i]}.jpg`);
     }
-    else if (productNames[i] == 'usb'){
+    else if (productNames[i] == 'usb') {
         new Product(productNames[i], `/assets/${productNames[i]}.gif`);
-    }else if (productNames[i] == 'sweep'){
+    } else if (productNames[i] == 'sweep') {
         new Product(productNames[i], `/assets/${productNames[i]}.png`);
     }
 }
@@ -40,7 +41,7 @@ var productsShow = document.querySelector('#productsShow');
 
 //objects
 var left, mid, right;
-var arr =[]
+var arr = []
 // fill in images 
 function renderImages() {
     //init three rand Objects
@@ -69,7 +70,7 @@ renderImages();
 
 productsShow.addEventListener('click', function (event) {
     // console.log(event.target)
-    if (totalClicks < 25) {
+    if (totalClicks < 5) {
         if (event.target.id !== 'productsShow') {
             totalClicks++;
             if (event.target.id === 'first') {
@@ -86,6 +87,17 @@ productsShow.addEventListener('click', function (event) {
 
     } else {
         renderResults();
+        // allProducts contains only clicked&viewed NO
+        for (var i = 0; i < Product.all.length; i++) {
+            allProducts.push(Product.all[i].clicks);
+            allProducts.push(Product.all[i].displayed);
+        }
+        // console.log(allProducts);
+        for (var i = 0; i < Product.all.length; i++) {
+            labelsArr.push('Clicks');
+            labelsArr.push('Views');
+        }
+        chart();
     }
 
 
@@ -104,4 +116,57 @@ function renderResults() {
 //helper functions
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+
+///Charts
+
+
+function chart() {
+    //get the canvas tag and tell the browser it's gonna be 2d
+    var context = document.getElementById('MyChart').getContext('2d');
+    //dec obj of chart
+
+    var myChart = new Chart(context, {
+        type: 'bar',
+        data: {
+
+            labels: labelsArr,//X-axis
+            datasets: [
+                {
+                    label: '# of Votes',
+                    data: allProducts,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1,
+
+                }
+            ]
+
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
 }
