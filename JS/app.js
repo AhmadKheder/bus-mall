@@ -1,16 +1,4 @@
 'use strict'
-'use strict'
-
-
-// var result1 = randomNumber(0, imageArrayName.length - 1);
-//     var result2 = randomNumber(0, imageArrayName.length - 1);
-//     var result3 = randomNumber(0, imageArrayName.length - 1);
-
-//     while (result1 === result2 || result1 === result3 || result2 === result3) {
-//         result1 = randomNumber(0, imageArrayName.length - 1);
-//         result2 = randomNumber(0, imageArrayName.length - 1);
-//         result3 = randomNumber(0, imageArrayName.length - 1);
-//     }
 
 var totalClicks = 0;
 var allProducts = [];
@@ -56,73 +44,51 @@ var left, mid, right;
 var firstRandoms = [];
 // random nums for the renderImages()
 
-
-
-
-
-
-
-
-
-
-
-
-
-var tempArr = [];
+var lastItiration = [];
 
 function randNums() {
-    console.log('tempArr ' + tempArr);
     var arr = [];
     var rand1 = randomNumber(0, Product.all.length - 1);
     var rand2 = randomNumber(0, Product.all.length - 1);
     var rand3 = randomNumber(0, Product.all.length - 1);
     arr.push(rand1, rand2, rand3);
-//arr = [1,2,3]
-//arr = [4,5,6]
-    console.log('arr ' + arr);
 
-    if (tempArr.includes(rand1) || tempArr.includes(rand2) || tempArr.includes(rand3)) {
-        randNums();
-    } else {
-        tempArr = arr;
-//temp = [1,2,3]
-//temp = [4,5,6]
+    if (arr[0] == arr[1] || arr[0] == arr[2] || arr[1] == arr[2]) {
+        arr = firstSequence(arr);
     }
-    console.log('tempArr ' + tempArr);
+    //subsequence
+    while (lastItiration.includes(arr[0]) || lastItiration.includes(arr[1]) || lastItiration.includes(arr[2])) {
+        arr = firstSequence(arr);
 
+    }
+
+    lastItiration = arr;
+    return arr;
+
+
+}
+//returns array of different randoms 
+function firstSequence(arr1) {
+    var arr = arr1;
+    var rand1, rand2, rand3;
+    while (arr[0] == arr[1] || arr[0] == arr[2] || arr[1] == arr[2]) {
+        rand1 = randomNumber(0, Product.all.length - 1);
+        rand2 = randomNumber(0, Product.all.length - 1);
+        rand3 = randomNumber(0, Product.all.length - 1);
+        arr = [rand1, rand2, rand3];
+    }
+    
     return arr;
 }
 
+// fill-in images 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//prevent duplicating in the second itiration
-
-// fill in images 
 function renderImages() {
-    var localRandNumsArr = randNums();//[1,2,3]
- 
+    var localRandNumsArr = [];
+    localRandNumsArr = randNums();//[1,2,3]
+    console.log(localRandNumsArr);
 
-    // check if there is a two similar pics => generate new randNums();
 
-    while (localRandNumsArr[0] == localRandNumsArr[1] || localRandNumsArr[0] == localRandNumsArr[2] || localRandNumsArr[2] == localRandNumsArr[3]) 
-    {
-        // randNums();
-        localRandNumsArr = randNums(); 
-    }
     //init three rand Objects
     left = Product.all[localRandNumsArr[0]];
     mid = Product.all[localRandNumsArr[1]];
@@ -145,14 +111,14 @@ function renderImages() {
     rightImage.alt = right.productname;
     firstRandoms = localRandNumsArr;
 
-
 }
+// secItira = localRandNumsArr;
 
 renderImages();
 
 productsShow.addEventListener('click', function (event) {
     // console.log(event.target)
-    if (totalClicks < 5) {
+    if (totalClicks < 10) {
         if (event.target.id !== 'productsShow') {
             totalClicks++;
             if (event.target.id === 'first') {
@@ -183,7 +149,6 @@ productsShow.addEventListener('click', function (event) {
         }
         chart();
     }
-
 
 });
 
