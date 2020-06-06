@@ -53,25 +53,22 @@ function randNums() {
     var rand3 = randomNumber(0, Product.all.length - 1);
     arr.push(rand1, rand2, rand3);
 
+    //subsequence
     if (arr[0] == arr[1] || arr[0] == arr[2] || arr[1] == arr[2]) {
         arr = firstSequence(arr);
     }
-    //subsequence
-    while (lastItiration.includes(arr[0]) || lastItiration.includes(arr[1]) || lastItiration.includes(arr[2])) {
-        arr = firstSequence(arr);
-
-    }
+    
 
     lastItiration = arr;
     return arr;
 
 
 }
-//returns array of different randoms 
+//returns array of differsent randoms 
 function firstSequence(arr1) {
     var arr = arr1;
     var rand1, rand2, rand3;
-    while (arr[0] == arr[1] || arr[0] == arr[2] || arr[1] == arr[2]) {
+    while ((arr[0] == arr[1] || arr[0] == arr[2] || arr[1] == arr[2])&&(lastItiration.includes(arr[0]) || lastItiration.includes(arr[1]) || lastItiration.includes(arr[2]))) {
         rand1 = randomNumber(0, Product.all.length - 1);
         rand2 = randomNumber(0, Product.all.length - 1);
         rand3 = randomNumber(0, Product.all.length - 1);
@@ -112,13 +109,12 @@ function renderImages() {
     firstRandoms = localRandNumsArr;
 
 }
-// secItira = localRandNumsArr;
 
 renderImages();
 
 productsShow.addEventListener('click', function (event) {
     // console.log(event.target)
-    if (totalClicks < 10) {
+    if (totalClicks < 25) {
         if (event.target.id !== 'productsShow') {
             totalClicks++;
             if (event.target.id === 'first') {
